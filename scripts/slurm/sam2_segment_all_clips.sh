@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=sam2-segments
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=08:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-sam2-segments-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-sam2-segments-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-sam2-segments-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-sam2-segments-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # v8 Change 3 preprocessing: SAM2 class-agnostic segments for every training
@@ -27,7 +27,7 @@ export PYTHONNOUSERSITE=1
 export HF_HUB_OFFLINE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
 # combined_train_data nests clips under subdirs (data/, SpatialVid/, train/) —
@@ -40,7 +40,7 @@ echo "commit: $(git log --oneline -1)"
 # on every RUGD run. Point this at data/sanpo_v26 to fill that gap.
 # SHARD/NSHARD split the list across parallel jobs (287 clips x ~5 min is a
 # GPU-day on one node). Per-clip skip makes every shard safely resumable.
-CLIPS_ROOT=${CLIPS_ROOT:-/scratch/m000204-pm06b/joana/combined_train_data}
+CLIPS_ROOT=${CLIPS_ROOT:-/scratch/m000204-pm07b/joana/combined_train_data}
 mapfile -t ALL < <(find "$CLIPS_ROOT" -name "*.mp4" | sort)
 SHARD=${SHARD:-0}
 NSHARD=${NSHARD:-1}

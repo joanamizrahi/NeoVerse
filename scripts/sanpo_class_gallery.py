@@ -5,8 +5,8 @@ gate for the 31->14 mapping decisions.
 
 Usage:
     python scripts/sanpo_class_gallery.py \
-        --root /scratch/m000204-pm06b/joana/data/sanpo \
-        --out /scratch/m000204-pm06b/joana/data/sanpo/inspect
+        --root /scratch/m000204-pm07b/joana/data/sanpo \
+        --out /scratch/m000204-pm07b/joana/data/sanpo/inspect
 """
 from __future__ import annotations
 

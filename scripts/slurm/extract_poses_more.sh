@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=poses-more
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=02:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/NeoVerse/outputs/poses/more-slurm-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/NeoVerse/outputs/poses/more-slurm-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/NeoVerse/outputs/poses/more-slurm-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/NeoVerse/outputs/poses/more-slurm-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # Extract per-frame camera poses for a diverse subset of clips to verify our
@@ -24,21 +24,21 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
-MODEL_PATH=/scratch/m000204-pm06b/joana/NeoVerse/models
-RECON_CKPT=/scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
+MODEL_PATH=/scratch/m000204-pm07b/joana/NeoVerse/models
+RECON_CKPT=/scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
 
 # Diverse mix: 4 more RUGD (different scenes), 4 more Cityscapes clips.
 CLIPS=(
-    /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_creek_01.mp4
-    /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_park-2_00.mp4
-    /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_park-8_00.mp4
-    /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_village_00.mp4
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips/cityscapes_stuttgart_00_01.mp4
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips/cityscapes_stuttgart_00_02.mp4
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips/cityscapes_stuttgart_01_00.mp4
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips/cityscapes_stuttgart_02_00.mp4
+    /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_creek_01.mp4
+    /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_park-2_00.mp4
+    /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_park-8_00.mp4
+    /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_village_00.mp4
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips/cityscapes_stuttgart_00_01.mp4
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips/cityscapes_stuttgart_00_02.mp4
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips/cityscapes_stuttgart_01_00.mp4
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips/cityscapes_stuttgart_02_00.mp4
 )
 
 for CLIP_PATH in "${CLIPS[@]}"; do
@@ -51,7 +51,7 @@ for CLIP_PATH in "${CLIPS[@]}"; do
         --input_path "$CLIP_PATH" \
         --model_path "$MODEL_PATH" \
         --reconstructor_path "$RECON_CKPT" \
-        --output_dir /scratch/m000204-pm06b/joana/NeoVerse/outputs/poses
+        --output_dir /scratch/m000204-pm07b/joana/NeoVerse/outputs/poses
 done
 
 echo "==> extract-more done; new poses in outputs/poses/"

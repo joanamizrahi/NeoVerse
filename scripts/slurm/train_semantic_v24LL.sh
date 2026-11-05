@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=train-sem-v24LL
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=16:00:00
 #SBATCH --exclude=n04,n13,n14,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-train-sem-v24LL-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-train-sem-v24LL-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-train-sem-v24LL-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-train-sem-v24LL-%j.err
 
 # v24LL: v24L warm-continued 30 more epochs (90 total, NO DINO, palette 4).
 # The no-DINO arm of the compute x DINO grid, and the control for the RGB
@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-mkdir -p /scratch/m000204-pm06b/joana/runs/train_semantic_v24LL
+mkdir -p /scratch/m000204-pm07b/joana/runs/train_semantic_v24LL
 
 module load conda/24.3.0-0
 module load cuda12.9/toolkit/12.9.1
@@ -25,7 +25,7 @@ export PYTHONNOUSERSITE=1
 hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
 # Stale-checkout + warm-start guards (the config-generator path-mangling trap
@@ -35,9 +35,9 @@ grep -q "train_semantic_v24L/checkpoint-epoch-30.safetensors" \
     || { echo "[sanity] FATAL: v24LL warm-start path wrong"; exit 1; }
 grep -q "sanpo_v21" training/configs/train_semantic_v24LL.yaml \
     || { echo "[sanity] FATAL: v24LL config not pointing at sanpo_v21 roots"; exit 1; }
-test -f /scratch/m000204-pm06b/joana/runs/train_semantic_v24L/checkpoint-epoch-30.safetensors \
+test -f /scratch/m000204-pm07b/joana/runs/train_semantic_v24L/checkpoint-epoch-30.safetensors \
     || { echo "[sanity] FATAL: v24L epoch-30 checkpoint missing"; exit 1; }
 
 python train.py training/configs/train_semantic_v24LL.yaml
 
-echo "==> v24LL done; checkpoints in /scratch/m000204-pm06b/joana/runs/train_semantic_v24LL/"
+echo "==> v24LL done; checkpoints in /scratch/m000204-pm07b/joana/runs/train_semantic_v24LL/"

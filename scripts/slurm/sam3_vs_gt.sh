@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=sam3-vs-gt
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=02:00:00
 #SBATCH --exclude=n04,n13,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-sam3-vs-gt-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-sam3-vs-gt-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-sam3-vs-gt-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-sam3-vs-gt-%j.err
 
 # Per-class SAM3 accuracy against SANPO human GT, on the HELD-OUT val clips
 # (convert_sanpo_val.py — last window per session, disjoint from training).
@@ -23,10 +23,10 @@ export PYTHONNOUSERSITE=1
 export HF_HUB_OFFLINE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
-VAL=/scratch/m000204-pm06b/joana/data/sanpo_val
+VAL=/scratch/m000204-pm07b/joana/data/sanpo_val
 if [ ! -d "$VAL/clips" ]; then
     echo "FATAL: no val set at $VAL/clips — run scripts/convert_sanpo_val.py first"
     exit 1
@@ -74,6 +74,6 @@ python scripts/remap_labels_to_v14.py --dirs "$STAGE"
 python scripts/sam3_vs_gt.py \
     --pred_dir "${STAGE}_v14" \
     --gt_dir "$VAL/labels" \
-    --csv /scratch/m000204-pm06b/joana/outputs/SAM3_VS_GT_confusion.csv
+    --csv /scratch/m000204-pm07b/joana/outputs/SAM3_VS_GT_confusion.csv
 
 echo "==> sam3 vs gt done"

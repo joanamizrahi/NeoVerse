@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=inf-sem
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=00:20:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-inf-sem-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-inf-sem-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-inf-sem-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-inf-sem-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # v8 stage-1 validation inference: the epoch-5 checkpoint of the x0-prediction
@@ -25,7 +25,7 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 RUN_NAME=${RUN_NAME:?set RUN_NAME=... via --export}
 CLIP=${CLIP:-rugd_trail_00}
 TRAJ=${TRAJ:-static}   # move_left / pan_left / orbit_left... for off-trajectory probes
@@ -67,7 +67,7 @@ fi
 [ -n "${LABELS_FILE:-}" ] && LABELS="$LABELS_FILE"
 [ -f "$LABELS" ] || { echo "==> no labels at $LABELS"; exit 1; }
 echo "commit: $(git log --oneline -1)"
-RUNS=/scratch/m000204-pm06b/joana/runs/${RUN_NAME}
+RUNS=/scratch/m000204-pm07b/joana/runs/${RUN_NAME}
 
 # EPOCH env selects the checkpoint; unset -> newest by mtime (the final one).
 # With EPOCH set, the output dir gets an _e${EPOCH} suffix so epoch probes
@@ -85,22 +85,22 @@ echo "==> rendering $CKPT"
 # (run inference_vanilla_traj.sh with SAVE_TRAJ=1 and the same CLIP/TRAJ/ANGLE/DIST first).
 ANCSUF=""
 if [ "${ANCHOR:-0}" = "1" ]; then
-    TRAJPT=/scratch/m000204-pm06b/joana/inference_VANILLA_${CLIP}_${TRAJ}${MAG}/rgb_latent_traj.pt
+    TRAJPT=/scratch/m000204-pm07b/joana/inference_VANILLA_${CLIP}_${TRAJ}${MAG}/rgb_latent_traj.pt
     [[ -f "$TRAJPT" ]] || { echo "==> no anchor trajectory at $TRAJPT — run the vanilla pass with SAVE_TRAJ=1 first"; exit 1; }
     EXTRA="$EXTRA --anchor_traj $TRAJPT"
     ANCSUF="_ANCHORED"
 fi
-OUT="/scratch/m000204-pm06b/joana/inference_${RUN_NAME}_${CLIP}_${TRAJ}${MAG}${DECSUF}${ANCSUF}${EPSUF}"
+OUT="/scratch/m000204-pm07b/joana/inference_${RUN_NAME}_${CLIP}_${TRAJ}${MAG}${DECSUF}${ANCSUF}${EPSUF}"
 mkdir -p "$OUT"
 # CLIPS_DIR: source clips (default RUGD; gnd_clips/scand_clips/go2w_clips for
 # grading a retrain on the new datasets).
-CLIPS_DIR=${CLIPS_DIR:-/scratch/m000204-pm06b/joana/data/rugd_clips}
+CLIPS_DIR=${CLIPS_DIR:-/scratch/m000204-pm07b/joana/data/rugd_clips}
 python inference_semantic.py \
     --input_path ${CLIPS_DIR}/${CLIP}.mp4 \
     --checkpoint "$CKPT" \
     --output_dir "$OUT" \
-    --model_path /scratch/m000204-pm06b/joana/NeoVerse/models \
-    --reconstructor_path /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
+    --model_path /scratch/m000204-pm07b/joana/NeoVerse/models \
+    --reconstructor_path /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
     --trajectory "$TRAJ" \
     --semantic_expansion_version 2 \
     --lora_rank 8 \

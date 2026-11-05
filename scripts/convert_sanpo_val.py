@@ -30,9 +30,9 @@ def main():
                     help="skip sessions with fewer labeled windows (keeps val "
                          "disjoint from front-picked training diets up to 6)")
     ap.add_argument("--clips_dir",
-                    default="/scratch/m000204-pm06b/joana/data/rugd_clips")
+                    default="/scratch/m000204-pm07b/joana/data/rugd_clips")
     ap.add_argument("--labels_dir",
-                    default="/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels_v14")
+                    default="/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels_v14")
     ap.add_argument("--max_sessions", type=int, default=20)
     ap.add_argument("--window_back", type=int, default=1,
                     help="1 = last window per session, 2 = second-to-last, ... "

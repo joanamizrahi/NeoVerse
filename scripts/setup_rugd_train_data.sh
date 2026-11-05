@@ -2,7 +2,7 @@
 # Build the SpatialVID-shaped training dataset for the RUGD clips.
 #
 # Prereqs:
-#   * RUGD clips exist at /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_*.mp4
+#   * RUGD clips exist at /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_*.mp4
 #     (produced by scripts/prepare_rugd_clips.py)
 #   * SAM 3 labels exist at outputs/sam3_labels/rugd_*.npz
 #     (produced by scripts/slurm/label_rugd_clips.sh)
@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-SCRATCH=/scratch/m000204-pm06b/joana
+SCRATCH=/scratch/m000204-pm07b/joana
 CLIPS_DIR="$SCRATCH/data/rugd_clips"
 LABELS_DIR="$SCRATCH/NeoVerse/outputs/sam3_labels"
 DATA_ROOT="$SCRATCH/rugd_train_data"

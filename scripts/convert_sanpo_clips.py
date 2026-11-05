@@ -14,11 +14,11 @@ hint, so the inpaint-and-correct task survives. Honest limitation, noted.
 
 Usage (CPU, ~1h):
     python scripts/convert_sanpo_clips.py \
-        --sanpo /scratch/m000204-pm06b/joana/data/sanpo \
-        --out /scratch/m000204-pm06b/joana/data/sanpo_v21 \
-        --v15_root /scratch/m000204-pm06b/joana/combined_train_data_v15 \
-        --sam3_dir /scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels_v14 \
-        --gt_dir /scratch/m000204-pm06b/joana/NeoVerse/outputs/gt_labels_v18 \
+        --sanpo /scratch/m000204-pm07b/joana/data/sanpo \
+        --out /scratch/m000204-pm07b/joana/data/sanpo_v21 \
+        --v15_root /scratch/m000204-pm07b/joana/combined_train_data_v15 \
+        --sam3_dir /scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels_v14 \
+        --gt_dir /scratch/m000204-pm07b/joana/NeoVerse/outputs/gt_labels_v18 \
         --clips_per_session 3
 """
 from __future__ import annotations

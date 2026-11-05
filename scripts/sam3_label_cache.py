@@ -24,7 +24,7 @@ from pathlib import Path
 
 import numpy as np
 
-SCRATCH = Path("/scratch/m000204-pm06b/joana")
+SCRATCH = Path("/scratch/m000204-pm07b/joana")
 
 
 def main():

@@ -7,7 +7,7 @@
 # clip absent from gt_labels_v18 trains appearance only — safe default.
 # Idempotent: rebuilds from scratch every run.
 set -euo pipefail
-SCRATCH=/scratch/m000204-pm06b/joana
+SCRATCH=/scratch/m000204-pm07b/joana
 SRC=$SCRATCH/combined_train_data_v15
 DST=$SCRATCH/combined_train_data_v18
 LABELS_DIR=$SCRATCH/NeoVerse/outputs/sam3_labels_v14

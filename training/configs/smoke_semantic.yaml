@@ -4,11 +4,11 @@
 # without erroring / NaN'ing. NOT a real training run -- results are throwaway.
 #
 # Setup expected before running (see scripts/setup_smoke_data.sh):
-#   /scratch/m000204-pm06b/joana/smoke_data/
+#   /scratch/m000204-pm07b/joana/smoke_data/
 #     data/train/SpatialVID_HQ_metadata.csv     (1 row: id=driving, ...)
 #     SpatialVid/HQ/driving/driving.mp4
 #     SpatialVid/HQ/driving/caption.json
-#   /scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels/driving.npz
+#   /scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels/driving.npz
 #     -- labels for ALL frames of driving.mp4 (rerun SAM3 with --static_scene)
 
 height: 336
@@ -25,10 +25,10 @@ semantic_channels: 16
 
 # 1-clip smoke dataset. `labels_dir` is the semantic finetune hook -- points at the
 # per-clip .npz files produced by sam3_precompute_labels.py.
-train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm06b/joana/smoke_data", labels_dir="/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
+train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm07b/joana/smoke_data", labels_dir="/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
 
-model_path: /scratch/m000204-pm06b/joana/NeoVerse/models
-reconstructor_path: /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
+model_path: /scratch/m000204-pm07b/joana/NeoVerse/models
+reconstructor_path: /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
 
 pipeline_kwargs:
   novel_view_sampling_trans: [0.01, 0.1]
@@ -55,7 +55,7 @@ num_epochs: 1                    # 1 clip x 1 epoch = smallest sane run
 batch_size: 1
 num_workers: 1
 pin_memory: false
-output_path: /scratch/m000204-pm06b/joana/runs/smoke_semantic
+output_path: /scratch/m000204-pm07b/joana/runs/smoke_semantic
 remove_prefix_in_ckpt: pipe.
 
 use_gradient_checkpointing: true
@@ -86,4 +86,4 @@ wandb_mode: online
 # gt_semantic_target.mp4 to <root>/<dataset>/<video_name>/ every iteration.
 # Only useful for smoke tests / eyeballing the first few iterations. For real
 # training, set to null to keep the pipeline lean.
-debug_save_root: /scratch/m000204-pm06b/joana/runs/smoke_semantic/debug
+debug_save_root: /scratch/m000204-pm07b/joana/runs/smoke_semantic/debug

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=train-sem-v34_p6_rugd
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=450G
 #SBATCH --time=12:00:00
 #SBATCH --exclude=n04,n13,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-train-sem-v34_p6_rugd-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-train-sem-v34_p6_rugd-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-train-sem-v34_p6_rugd-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-train-sem-v34_p6_rugd-%j.err
 # v34: v33 continued on SANPO + RUGD (rough / trail vocabulary), see the
 # config header. Same torchrun launch as v33: one process per GPU, ~100 GB
 # host RAM per process, so --mem is sized for 4 processes. 10 epochs at
@@ -26,7 +26,7 @@
 set -euo pipefail
 NGPU=${NGPU:-4}
 CONFIG=${CONFIG:-training/configs/train_semantic_v34_p6_rugd.yaml}
-mkdir -p /scratch/m000204-pm06b/joana/runs/train_semantic_v34_p6_rugd
+mkdir -p /scratch/m000204-pm07b/joana/runs/train_semantic_v34_p6_rugd
 
 module load conda/24.3.0-0
 module load cuda12.9/toolkit/12.9.1
@@ -34,14 +34,14 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 nvidia-smi -L
 NSEEN=$(nvidia-smi -L | wc -l)
 [ "$NSEEN" -ge "$NGPU" ] || { echo "REFUSED: NGPU=$NGPU but the job has $NSEEN GPU(s)"; exit 2; }
 
 # --- sanity guards: every one of these has caught a real launch bug before ---
-ROOT=/scratch/m000204-pm06b/joana/data/sanpo_v34
+ROOT=/scratch/m000204-pm07b/joana/data/sanpo_v34
 CSV=$ROOT/combined_train_data_v21/data/train/SpatialVID_HQ_metadata.csv
 test -f "$CSV" || { echo "[sanity] FATAL: v34 dataset missing ($CSV) -- run the build in the header"; exit 1; }
 NROWS=$(( $(wc -l < "$CSV") - 1 ))
@@ -52,7 +52,7 @@ echo "[sanity] training clips: $NROWS (rugd: $NRUGD)"
 # the RUGD targets must carry the new merge: some pixels labelled rough (4)
 python - <<'EOF' || exit 1
 import numpy as np, glob
-fs = sorted(glob.glob("/scratch/m000204-pm06b/joana/data/sanpo_v34/gt_labels_v21/rugd_*.npz"))[:8]
+fs = sorted(glob.glob("/scratch/m000204-pm07b/joana/data/sanpo_v34/gt_labels_v21/rugd_*.npz"))[:8]
 assert fs, "[sanity] no rugd GT in gt_labels_v21"
 tot = np.zeros(14);
 for f in fs:
@@ -69,4 +69,4 @@ test -f "$PRE" || { echo "[sanity] FATAL: warm-start weights missing: $PRE"; exi
 echo "[sanity] warm start from $PRE ; processes: $NGPU"
 
 python -m torch.distributed.run --standalone --nproc_per_node="$NGPU" train.py "$CONFIG"
-echo "==> v34 done; checkpoints in /scratch/m000204-pm06b/joana/runs/train_semantic_v34_p6_rugd/"
+echo "==> v34 done; checkpoints in /scratch/m000204-pm07b/joana/runs/train_semantic_v34_p6_rugd/"

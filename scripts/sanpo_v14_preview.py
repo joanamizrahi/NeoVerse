@@ -10,8 +10,8 @@ Outputs under --out:
 
 Usage:
     python scripts/sanpo_v14_preview.py \
-        --sanpo /scratch/m000204-pm06b/joana/data/sanpo \
-        --out /scratch/m000204-pm06b/joana/data/sanpo/inspect
+        --sanpo /scratch/m000204-pm07b/joana/data/sanpo \
+        --out /scratch/m000204-pm07b/joana/data/sanpo/inspect
 """
 from __future__ import annotations
 

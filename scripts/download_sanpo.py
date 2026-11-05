@@ -19,7 +19,7 @@ node with modest --workers.
 
 Usage:
     python scripts/download_sanpo.py \
-        --out /scratch/m000204-pm06b/joana/data/sanpo \
+        --out /scratch/m000204-pm07b/joana/data/sanpo \
         --max_sessions 60 --workers 8
 """
 from __future__ import annotations

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=inf-v5-50step
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=04:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-inf-v5-50step-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-inf-v5-50step-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-inf-v5-50step-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-inf-v5-50step-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # 50-step eval of v5 WITHOUT the lightx2v 4-step distill LoRA (--disable_lora).
@@ -31,9 +31,9 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
-RUNS_DIR=/scratch/m000204-pm06b/joana/runs/train_semantic_v5
+RUNS_DIR=/scratch/m000204-pm07b/joana/runs/train_semantic_v5
 
 for EPOCH in 20 10; do
     CKPT="${RUNS_DIR}/checkpoint-epoch-${EPOCH}.safetensors"
@@ -41,15 +41,15 @@ for EPOCH in 20 10; do
         echo "==> SKIP: $CKPT not found (ls ${RUNS_DIR} and fix the epoch list)"
         continue
     fi
-    OUT="/scratch/m000204-pm06b/joana/inference_v5_epoch${EPOCH}_rugdtrail_50step"
+    OUT="/scratch/m000204-pm07b/joana/inference_v5_epoch${EPOCH}_rugdtrail_50step"
     mkdir -p "$OUT"
     echo "==> epoch ${EPOCH}, 50-step, output -> $OUT"
     python inference_semantic.py \
-        --input_path /scratch/m000204-pm06b/joana/data/rugd_clips/rugd_trail_00.mp4 \
+        --input_path /scratch/m000204-pm07b/joana/data/rugd_clips/rugd_trail_00.mp4 \
         --checkpoint "$CKPT" \
         --output_dir "$OUT" \
-        --model_path /scratch/m000204-pm06b/joana/NeoVerse/models \
-        --reconstructor_path /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
+        --model_path /scratch/m000204-pm07b/joana/NeoVerse/models \
+        --reconstructor_path /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
         --trajectory static \
         --disable_lora
 done

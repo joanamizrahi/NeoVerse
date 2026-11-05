@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=train-sem-v7
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=24:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-train-sem-v7-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-train-sem-v7-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-train-sem-v7-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-train-sem-v7-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # v7: dense RUGD GT targets (Option B hybrid) + trunk LoRA rank 8, 30 epochs.
 # Logs go to the joana/ root (always exists) — SLURM won't create log dirs.
 # PREREQ (run once, login node is fine — CPU only):
 #   python scripts/prepare_rugd_gt_labels.py \
-#     --annotations_root /scratch/m000204-pm06b/joana/data/rugd/RUGD_annotations \
-#     --colormap /scratch/m000204-pm06b/joana/data/rugd/RUGD_annotations/RUGD_annotation-colormap.txt \
-#     --clips_dir /scratch/m000204-pm06b/joana/data/rugd_clips \
-#     --out_dir /scratch/m000204-pm06b/joana/NeoVerse/outputs/rugd_gt_labels
+#     --annotations_root /scratch/m000204-pm07b/joana/data/rugd/RUGD_annotations \
+#     --colormap /scratch/m000204-pm07b/joana/data/rugd/RUGD_annotations/RUGD_annotation-colormap.txt \
+#     --clips_dir /scratch/m000204-pm07b/joana/data/rugd_clips \
+#     --out_dir /scratch/m000204-pm07b/joana/NeoVerse/outputs/rugd_gt_labels
 # (adjust --annotations_root to wherever the RUGD annotation masks live)
 
 set -euo pipefail
 
-mkdir -p /scratch/m000204-pm06b/joana/runs/train_semantic_v7
+mkdir -p /scratch/m000204-pm07b/joana/runs/train_semantic_v7
 
 module load conda/24.3.0-0
 module load cuda12.9/toolkit/12.9.1
@@ -30,13 +30,13 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 echo "hostname: $(hostname)"
 python -c "import torch; print(f'torch: {torch.__version__}, cuda: {torch.cuda.is_available()}')"
 
-GT_DIR=/scratch/m000204-pm06b/joana/NeoVerse/outputs/rugd_gt_labels
-SAM3_DIR=/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels
+GT_DIR=/scratch/m000204-pm07b/joana/NeoVerse/outputs/rugd_gt_labels
+SAM3_DIR=/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels
 
 # Sanity: GT labels must exist and cover the RUGD clips, else v7 silently
 # degenerates into a re-run of v6 (SAM3 fallback for every clip).
@@ -49,7 +49,7 @@ if [ "$N_GT" -lt 10 ]; then
 fi
 python - <<'PY'
 import numpy as np, glob
-files = sorted(glob.glob("/scratch/m000204-pm06b/joana/NeoVerse/outputs/rugd_gt_labels/*.npz"))
+files = sorted(glob.glob("/scratch/m000204-pm07b/joana/NeoVerse/outputs/rugd_gt_labels/*.npz"))
 voids = []
 for f in files[:5] + files[-5:]:
     lab = np.load(f)["labels"]
@@ -62,4 +62,4 @@ PY
 
 python train.py training/configs/train_semantic_v7.yaml
 
-echo "==> v7 done; checkpoints in /scratch/m000204-pm06b/joana/runs/train_semantic_v7/"
+echo "==> v7 done; checkpoints in /scratch/m000204-pm07b/joana/runs/train_semantic_v7/"

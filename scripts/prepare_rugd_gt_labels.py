@@ -28,10 +28,10 @@ chunking parameters differ, labels will pair with the wrong frames.
 
 Usage (Marlowe login node is fine — CPU only, ~minutes):
     python scripts/prepare_rugd_gt_labels.py \
-        --annotations_root /scratch/m000204-pm06b/joana/data/rugd/RUGD_annotations \
-        --colormap /scratch/m000204-pm06b/joana/data/rugd/RUGD_annotations/RUGD_annotation-colormap.txt \
-        --clips_dir /scratch/m000204-pm06b/joana/data/rugd_clips \
-        --out_dir /scratch/m000204-pm06b/joana/NeoVerse/outputs/rugd_gt_labels
+        --annotations_root /scratch/m000204-pm07b/joana/data/rugd/RUGD_annotations \
+        --colormap /scratch/m000204-pm07b/joana/data/rugd/RUGD_annotations/RUGD_annotation-colormap.txt \
+        --clips_dir /scratch/m000204-pm07b/joana/data/rugd_clips \
+        --out_dir /scratch/m000204-pm07b/joana/NeoVerse/outputs/rugd_gt_labels
 """
 import argparse
 import re

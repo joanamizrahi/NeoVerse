@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=inf-base
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=96G
 #SBATCH --time=01:30:00
 #SBATCH --exclude=n04,n06,n13,n14,n17,n21,n24,n26,n30,n31
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-inf-base-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-inf-base-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-inf-base-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-inf-base-%j.err
 
 # BASE-model RGB render (2026-08-31, her control question: "does the world
 # model hallucinate like this even without the semantics head?"). Runs the
@@ -25,13 +25,13 @@ export PYTHONNOUSERSITE=1
 hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
 CLIP=${CLIP:-rugd_trail_00}
-CLIPS_DIR=${CLIPS_DIR:-/scratch/m000204-pm06b/joana/data/rugd_clips}
+CLIPS_DIR=${CLIPS_DIR:-/scratch/m000204-pm07b/joana/data/rugd_clips}
 TRAJ=${TRAJ:-static}
-OUT=/scratch/m000204-pm06b/joana/inference_BASE_${CLIP}_${TRAJ}
+OUT=/scratch/m000204-pm07b/joana/inference_BASE_${CLIP}_${TRAJ}
 mkdir -p "$OUT"
 
 python inference.py \

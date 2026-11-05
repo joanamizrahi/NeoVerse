@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=relabel-all
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=02:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels/relabel-all-slurm-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels/relabel-all-slurm-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels/relabel-all-slurm-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels/relabel-all-slurm-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # Relabel ALL 46 training clips with the SAM3 priority-order fix.
@@ -22,12 +22,12 @@ export PATH=/users/jmizrahi/.conda/envs/sam3/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 # Iterate every mp4 in the two clip directories (RUGD + Cityscapes).
 for CLIPS_DIR in \
-    /scratch/m000204-pm06b/joana/data/rugd_clips \
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips
+    /scratch/m000204-pm07b/joana/data/rugd_clips \
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips
 do
     [ ! -d "$CLIPS_DIR" ] && continue
     for CLIP_PATH in "$CLIPS_DIR"/*.mp4; do

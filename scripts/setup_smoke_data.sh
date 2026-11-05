@@ -11,11 +11,11 @@
 # Prereqs:
 #   * sam3 conda env active AND on a GPU node (SAM 3 forward pass needs cuda)
 #   * SAM 3 weights already cached in ~/.cache/huggingface/ (or will download)
-#   * NeoVerse repo checked out at /scratch/m000204-pm06b/joana/NeoVerse
+#   * NeoVerse repo checked out at /scratch/m000204-pm07b/joana/NeoVerse
 
 set -euo pipefail
 
-SCRATCH=/scratch/m000204-pm06b/joana
+SCRATCH=/scratch/m000204-pm07b/joana
 SMOKE_ROOT="$SCRATCH/smoke_data"
 NEOVERSE="$SCRATCH/NeoVerse"
 LABELS_DIR="$NEOVERSE/outputs/sam3_labels"

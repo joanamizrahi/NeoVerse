@@ -21,10 +21,10 @@ seed: 0
 semantic_channels: 16
 
 # Same 46-clip combined RUGD + Cityscapes dataset as v3.
-train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm06b/joana/combined_train_data", labels_dir="/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
+train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm07b/joana/combined_train_data", labels_dir="/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
 
-model_path: /scratch/m000204-pm06b/joana/NeoVerse/models
-reconstructor_path: /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
+model_path: /scratch/m000204-pm07b/joana/NeoVerse/models
+reconstructor_path: /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
 
 pipeline_kwargs:
   novel_view_sampling_trans: [0.01, 0.1]
@@ -49,7 +49,7 @@ lora_rank: 32
 # Warm-start from v3's best checkpoint. Loads control_branch + LoRA weights on
 # top of the initialized model. patch_embedding + head weren't saved by v3 (they
 # were frozen), so they start at zero-init and train fresh -- exactly what we want.
-pretrained_path: /scratch/m000204-pm06b/joana/runs/train_semantic_v3/checkpoint-epoch-7.safetensors
+pretrained_path: /scratch/m000204-pm07b/joana/runs/train_semantic_v3/checkpoint-epoch-7.safetensors
 
 learning_rate: 1e-4              # 2x v3 -- semantic slots start from zero
 num_epochs: 15
@@ -57,7 +57,7 @@ batch_size: 1
 num_workers: 2
 pin_memory: false
 gradient_accumulation_steps: 1   # v3 confirmed grad-accum=4 OOMs on H100
-output_path: /scratch/m000204-pm06b/joana/runs/train_semantic_v4
+output_path: /scratch/m000204-pm07b/joana/runs/train_semantic_v4
 remove_prefix_in_ckpt: pipe.
 
 use_gradient_checkpointing: true

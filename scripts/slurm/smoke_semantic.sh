@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=smoke-sem
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=00:45:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/runs/smoke_semantic/slurm-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/runs/smoke_semantic/slurm-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/runs/smoke_semantic/slurm-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/runs/smoke_semantic/slurm-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # Semantic finetune SMOKE TEST.
@@ -23,7 +23,7 @@
 
 set -euo pipefail
 
-mkdir -p /scratch/m000204-pm06b/joana/runs/smoke_semantic
+mkdir -p /scratch/m000204-pm07b/joana/runs/smoke_semantic
 
 # --- environment ---
 # NeoVerse env (torch 2.3.1 cu121, gsplat, torch-scatter, etc.).
@@ -42,7 +42,7 @@ hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
 export TRANSFORMERS_VERBOSITY=warning
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 # --- sanity: env is what we expect ---
 echo "hostname: $(hostname)"
@@ -59,8 +59,8 @@ python -c "import wandb" 2>/dev/null || python -m pip install --quiet wandb
 python - <<'PY'
 import os, numpy as np
 from decord import VideoReader
-npz = "/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels/driving.npz"
-vp = "/scratch/m000204-pm06b/joana/NeoVerse/examples/videos/driving.mp4"
+npz = "/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels/driving.npz"
+vp = "/scratch/m000204-pm07b/joana/NeoVerse/examples/videos/driving.mp4"
 d = np.load(npz)
 n_labels = d["labels"].shape[0]
 n_video = len(VideoReader(vp))

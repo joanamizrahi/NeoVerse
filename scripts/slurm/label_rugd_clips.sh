@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=label-rugd
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=03:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/data/rugd_clips/label-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/data/rugd_clips/label-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/data/rugd_clips/label-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/data/rugd_clips/label-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # Batch-label every RUGD MP4 clip in /scratch/.../rugd_clips/ with SAM 3.
@@ -23,9 +23,9 @@ export PATH=/users/jmizrahi/.conda/envs/sam3/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
-IN_DIR="/scratch/m000204-pm06b/joana/data/rugd_clips"
+IN_DIR="/scratch/m000204-pm07b/joana/data/rugd_clips"
 OUT_DIR="outputs/sam3_labels"
 mkdir -p "$OUT_DIR"
 

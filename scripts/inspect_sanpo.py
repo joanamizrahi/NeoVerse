@@ -13,8 +13,8 @@ whether region structure is clean and how ids are laid out.
 
 Usage:
     python scripts/inspect_sanpo.py \
-        --root /scratch/m000204-pm06b/joana/data/sanpo \
-        --out /scratch/m000204-pm06b/joana/data/sanpo/inspect
+        --root /scratch/m000204-pm07b/joana/data/sanpo \
+        --out /scratch/m000204-pm07b/joana/data/sanpo/inspect
 """
 from __future__ import annotations
 

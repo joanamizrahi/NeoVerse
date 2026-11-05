@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=pano-pipe
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=03:00:00
 #SBATCH --exclude=n04,n06,n13,n14,n17,n21,n24,n26,n30,n31
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-pano-pipe-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-pano-pipe-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-pano-pipe-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-pano-pipe-%j.err
 
 # PANO SCENE PIPELINE (2026-08-31, true-360 track): one job takes an extracted
 # pano scene (main mp4 + _pano_yaw{090,270}.mp4 from prepare_rosbag_clips
@@ -30,9 +30,9 @@ SAM3PY=/users/jmizrahi/.conda/envs/sam3/bin/python
 NEOPY=/users/jmizrahi/.conda/envs/neoverse/bin/python
 
 S=${SCENE:-gnd_AUpano01}
-CLIP_DIR=/scratch/m000204-pm06b/joana/data/rugd_clips
+CLIP_DIR=/scratch/m000204-pm07b/joana/data/rugd_clips
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
 for V in "" _pano_yaw090 _pano_yaw270; do
@@ -54,11 +54,11 @@ for V in "" _pano_yaw090 _pano_yaw270; do
 done
 
 echo "==> reconstructor poses for ${S}"
-cd /scratch/m000204-pm06b/joana/nav-rl
+cd /scratch/m000204-pm07b/joana/nav-rl
 "$NEOPY" scripts/extract_poses.py \
     --videos "$CLIP_DIR/${S}.mp4" \
-    --output_dir /scratch/m000204-pm06b/joana/outputs/poses \
-    --reconstructor_path /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
+    --output_dir /scratch/m000204-pm07b/joana/outputs/poses \
+    --reconstructor_path /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt \
     --num_frames 81 --width 560 --height 336 \
     --camera_height_m "${CAM_H:-0.6}"
 

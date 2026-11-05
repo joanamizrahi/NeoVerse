@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=sam3-cache
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=04:00:00
 #SBATCH --exclude=n04,n13,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-sam3-cache-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-sam3-cache-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-sam3-cache-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-sam3-cache-%j.err
 
 # Re-label a ribbon cache with SAM3 run on the cache's OWN generated RGB.
 # Builds sibling cache <CACHE>_<OUT_TAG> (rgb/alpha/manifest symlinked, only
@@ -29,7 +29,7 @@ export PATH=/users/jmizrahi/.conda/envs/sam3/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 CACHE=${CACHE:-ribbon_cache_fan}
 SCENE=${SCENE:-rugd_trail_00}

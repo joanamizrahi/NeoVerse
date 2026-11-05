@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=sam3-new
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=01:00:00
 #SBATCH --exclude=n04,n13,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-sam3-new-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-sam3-new-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-sam3-new-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-sam3-new-%j.err
 
 # SAM3-label the NEW dataset clips (GND / SCAND / lab bags) and refresh the
 # v14 remap. ~1 min per clip.
@@ -20,13 +20,13 @@ export PATH=/users/jmizrahi/.conda/envs/sam3/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 for CLIPS_DIR in \
-    /scratch/m000204-pm06b/joana/data/gnd_clips \
-    /scratch/m000204-pm06b/joana/data/scand_clips \
-    /scratch/m000204-pm06b/joana/data/go2w_clips \
-    /scratch/m000204-pm06b/joana/data/cityscapes_clips
+    /scratch/m000204-pm07b/joana/data/gnd_clips \
+    /scratch/m000204-pm07b/joana/data/scand_clips \
+    /scratch/m000204-pm07b/joana/data/go2w_clips \
+    /scratch/m000204-pm07b/joana/data/cityscapes_clips
 do
     [ ! -d "$CLIPS_DIR" ] && continue
     for CLIP_PATH in "$CLIPS_DIR"/*.mp4; do

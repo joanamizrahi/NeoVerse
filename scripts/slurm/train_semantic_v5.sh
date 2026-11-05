@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=train-sem-v5
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=16:00:00
-#SBATCH --output=/scratch/m000204-pm06b/joana/runs/train_semantic_v5/slurm-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/runs/train_semantic_v5/slurm-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/runs/train_semantic_v5/slurm-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/runs/train_semantic_v5/slurm-%j.err
 #SBATCH --exclude=n04,n13,n17,n24
 
 # v5: LoRA on patch_embedding + head.head (fixes v4 RGB degradation) +
@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-mkdir -p /scratch/m000204-pm06b/joana/runs/train_semantic_v5
+mkdir -p /scratch/m000204-pm07b/joana/runs/train_semantic_v5
 
 module load conda/24.3.0-0
 module load cuda12.9/toolkit/12.9.1
@@ -27,7 +27,7 @@ hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
 export TRANSFORMERS_VERBOSITY=warning
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 
 echo "hostname: $(hostname)"
 echo "which python: $(which python)"
@@ -90,4 +90,4 @@ python -c "import wandb" 2>/dev/null || python -m pip install --quiet wandb
 
 python train.py "$CONFIG_PATH"
 
-echo "==> v5 training done; checkpoints in /scratch/m000204-pm06b/joana/runs/train_semantic_v5/"
+echo "==> v5 training done; checkpoints in /scratch/m000204-pm07b/joana/runs/train_semantic_v5/"

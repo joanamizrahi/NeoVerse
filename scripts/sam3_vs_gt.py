@@ -21,7 +21,7 @@ from every statistic rather than counted as a class.
 Usage (login node — pure numpy, no GPU):
     python scripts/sam3_vs_gt.py \
         --pred_dir outputs/sam3_labels \
-        --gt_dir /scratch/m000204-pm06b/joana/data/sanpo_val/labels
+        --gt_dir /scratch/m000204-pm07b/joana/data/sanpo_val/labels
 """
 from __future__ import annotations
 

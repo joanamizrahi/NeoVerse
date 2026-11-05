@@ -38,8 +38,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input_path", default="examples/videos/driving.mp4")
     ap.add_argument("--output_dir", default="outputs/freeze_camera/diffused")
-    ap.add_argument("--model_path", default="/scratch/m000204-pm06b/joana/NeoVerse/models")
-    ap.add_argument("--reconstructor_path", default="/scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt")
+    ap.add_argument("--model_path", default="/scratch/m000204-pm07b/joana/NeoVerse/models")
+    ap.add_argument("--reconstructor_path", default="/scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt")
     ap.add_argument("--freeze_frame", type=int, default=0,
                     help="which source-video frame's pose to hold the camera at")
     ap.add_argument("--num_frames", type=int, default=81)

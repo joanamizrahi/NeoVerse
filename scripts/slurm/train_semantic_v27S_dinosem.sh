@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=train-sem-v27S
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=16:00:00
 #SBATCH --exclude=n04,n13,n14,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-train-sem-v27S-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-train-sem-v27S-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-train-sem-v27S-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-train-sem-v27S-%j.err
 
 # v27S: FROM-SCRATCH twin of v27 — palette 4, DINO into the semantic head
 # only, no warm start. Pairs with v24 (scratch, no DINO) at the same level.
@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-mkdir -p /scratch/m000204-pm06b/joana/runs/train_semantic_v27S_dinosem
+mkdir -p /scratch/m000204-pm07b/joana/runs/train_semantic_v27S_dinosem
 
 module load conda/24.3.0-0
 module load cuda12.9/toolkit/12.9.1
@@ -25,7 +25,7 @@ export PYTHONNOUSERSITE=1
 hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
 
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"
 
 # Guards: must be SCRATCH (no warm start), must route to the semantic head,
@@ -45,4 +45,4 @@ grep -q "train_semantic_v27S_dinosem" \
 
 python train.py training/configs/train_semantic_v27S_dinosem.yaml
 
-echo "==> v27S done; checkpoints in /scratch/m000204-pm06b/joana/runs/train_semantic_v27S_dinosem/"
+echo "==> v27S done; checkpoints in /scratch/m000204-pm07b/joana/runs/train_semantic_v27S_dinosem/"

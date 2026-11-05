@@ -15,7 +15,7 @@
 
 set -euo pipefail
 
-SCRATCH=/scratch/m000204-pm06b/joana
+SCRATCH=/scratch/m000204-pm07b/joana
 LABELS_DIR="$SCRATCH/NeoVerse/outputs/sam3_labels"
 DATA_ROOT="$SCRATCH/combined_train_data"
 META_DIR="$DATA_ROOT/data/train"

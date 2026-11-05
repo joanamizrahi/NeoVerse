@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=hint-dump
-#SBATCH --account=marlowe-m000204-pm06b
+#SBATCH --account=marlowe-m000204-pm07b
 #SBATCH --partition=batch
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=220G
 #SBATCH --time=00:30:00
 #SBATCH --exclude=n04,n13,n17,n24
-#SBATCH --output=/scratch/m000204-pm06b/joana/slurm-hint-dump-%j.out
-#SBATCH --error=/scratch/m000204-pm06b/joana/slurm-hint-dump-%j.err
+#SBATCH --output=/scratch/m000204-pm07b/joana/slurm-hint-dump-%j.out
+#SBATCH --error=/scratch/m000204-pm07b/joana/slurm-hint-dump-%j.err
 # HINT/TARGET DUMP (2026-09-19): does the training hint contain the people and
 # vehicles the target contains? Runs the training loop for ~20 minutes with
 # debug_save_root set, one process, one clip per step, and lets the time limit
@@ -23,7 +23,7 @@ export PATH=/users/jmizrahi/.conda/envs/neoverse/bin:$PATH
 export PYTHONNOUSERSITE=1
 hash -r
 export HF_HUB_DISABLE_PROGRESS_BARS=1
-cd /scratch/m000204-pm06b/joana/NeoVerse
+cd /scratch/m000204-pm07b/joana/NeoVerse
 echo "commit: $(git log --oneline -1)"; nvidia-smi -L
 grep -q "debug_save_root: /scratch" "$CONFIG" || { echo "[sanity] FATAL: config has no debug_save_root"; exit 1; }
 PRE=$(grep -o "pretrained_path: .*" "$CONFIG" | awk '{print $2}'); test -f "$PRE" || { echo "[sanity] FATAL: weights missing: $PRE"; exit 1; }

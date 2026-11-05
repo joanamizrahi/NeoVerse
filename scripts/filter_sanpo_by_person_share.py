@@ -11,9 +11,9 @@ The new root is a directory beside the old one: everything symlinked, only
 data/train/SpatialVID_HQ_metadata.csv rewritten with the kept rows.
 
     python scripts/filter_sanpo_by_person_share.py \
-        --root /scratch/m000204-pm06b/joana/data/sanpo_v26/combined_train_data_v21 \
-        --gt_dir /scratch/m000204-pm06b/joana/data/sanpo_v26/gt_labels_v21 \
-        --max_share 0.05 --out /scratch/m000204-pm06b/joana/data/sanpo_v26/combined_train_data_v21_ppl5
+        --root /scratch/m000204-pm07b/joana/data/sanpo_v26/combined_train_data_v21 \
+        --gt_dir /scratch/m000204-pm07b/joana/data/sanpo_v26/gt_labels_v21 \
+        --max_share 0.05 --out /scratch/m000204-pm07b/joana/data/sanpo_v26/combined_train_data_v21_ppl5
 """
 import argparse, csv, os
 import numpy as np

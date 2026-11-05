@@ -3,11 +3,11 @@
 # creek, parks, village). Assumes the smoke test already validated plumbing.
 #
 # Setup expected before running (see scripts/setup_rugd_train_data.sh):
-#   /scratch/m000204-pm06b/joana/rugd_train_data/
+#   /scratch/m000204-pm07b/joana/rugd_train_data/
 #     data/train/SpatialVID_HQ_metadata.csv       (~30 rows, one per clip)
 #     SpatialVid/HQ/<clip>/<clip>.mp4              (symlinks)
 #     SpatialVid/HQ/<clip>/caption.json            (scene descriptions)
-#   /scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels/<clip>.npz  (per-frame SAM3 labels)
+#   /scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels/<clip>.npz  (per-frame SAM3 labels)
 
 height: 336
 width: 560
@@ -20,10 +20,10 @@ seed: 0
 semantic_channels: 16
 
 # ~30 clips. `labels_dir` matches the batch-labeling script's output.
-train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm06b/joana/rugd_train_data", labels_dir="/scratch/m000204-pm06b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
+train_dataset: SpatialVID(split=None, ROOT="/scratch/m000204-pm07b/joana/rugd_train_data", labels_dir="/scratch/m000204-pm07b/joana/NeoVerse/outputs/sam3_labels", max_interval=5, height=${height}, width=${width}, num_views=${num_views}, min_num_context_views=${min_num_context_views}, max_num_context_views=${max_num_context_views}, seed=${seed})
 
-model_path: /scratch/m000204-pm06b/joana/NeoVerse/models
-reconstructor_path: /scratch/m000204-pm06b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
+model_path: /scratch/m000204-pm07b/joana/NeoVerse/models
+reconstructor_path: /scratch/m000204-pm07b/joana/NeoVerse/models/NeoVerse/reconstructor.ckpt
 
 pipeline_kwargs:
   novel_view_sampling_trans: [0.01, 0.1]
@@ -53,7 +53,7 @@ batch_size: 1                    # Wan 14B, single H100 can't fit more
 num_workers: 2
 pin_memory: false
 gradient_accumulation_steps: 4   # effective batch = 4
-output_path: /scratch/m000204-pm06b/joana/runs/train_semantic_v1
+output_path: /scratch/m000204-pm07b/joana/runs/train_semantic_v1
 remove_prefix_in_ckpt: pipe.
 
 use_gradient_checkpointing: true
